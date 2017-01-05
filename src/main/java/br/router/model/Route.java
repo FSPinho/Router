@@ -114,4 +114,24 @@ public class Route {
 		return innerPath;
 	}
 	
+	@JsonIgnore
+	public Stop getNearStop(Position p) {
+		if(stops.size() > 0) {
+			Stop near = stops.get(0);
+			for(Stop s: stops) {
+				if(s.getPosition().getDistanceTo(p) < near.getPosition().getDistanceTo(p)) {
+					near = s;
+				}
+				
+			}
+			return near;
+		}
+		return null;
+	}
+	
+	@JsonIgnore
+	public double getRouteDistance(Position p) {
+		return p.getDistanceTo(path);
+	}
+	
 }
