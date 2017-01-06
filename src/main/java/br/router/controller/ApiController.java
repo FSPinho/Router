@@ -80,6 +80,31 @@ public class ApiController {
 				.withObject(routeService.getAll());
 	}
 	
+	@GetMapping(value = "/route/by_vehicle/{vehicleId}")
+	public ApiResponse routeGetByVehicle(@PathVariable BigInteger vehicleId) {
+		
+		Vehicle vehicle = vehicleService.getById(vehicleId);
+		
+		if(vehicle == null) {
+			return new ApiResponse()
+					.withFailStatus()
+					.withShortErrorMessage("Erro encontrar rota: um veículo deve ser informado!");
+			
+		} else {
+			List<Route> routes = routeService.getByVehicle(vehicle);
+			if(routes.size() == 0)
+				return new ApiResponse()
+						.withShortInfoMessage("Este veículo não possui rotas!")
+						.withObject(routes);
+			else 
+				return new ApiResponse()
+						.withObject(routes);
+				
+		}
+		
+	}
+	
+	
 	@PostMapping(value = "/route/{vehicleId}")
 	public ApiResponse routeCreate(@PathVariable BigInteger vehicleId, @RequestBody Route route) {
 		
@@ -159,7 +184,7 @@ public class ApiController {
 				proximityEventService.save(event);
 				
 				return new ApiResponse()
-						.withShortSuccessMessage("Evento criado!")
+						.withShortInfoMessage("A parada mais proxima é o item com o id: " + stop.getName())
 						.withObject(event);
 			} else {
 				return new ApiResponse()
@@ -217,7 +242,7 @@ public class ApiController {
 				escapeEventService.save(event);
 				
 				return new ApiResponse()
-						.withShortSuccessMessage("Evento criado!")
+						.withShortSuccessMessage("O veiculo está a " + String.format("%.2f", distance) + " metros da rota")
 						.withObject(event);
 			} else {
 				return new ApiResponse()

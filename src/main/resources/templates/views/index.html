@@ -14,6 +14,7 @@
             #map {
                 height: 480px;
                 width: 480px;
+                z-index: 0;
             }
         </style>
 
@@ -27,15 +28,27 @@
             	md-colors="{background: 'grey-50'}"
             	md-whiteframe="2" >
             
-            	<h4>Active vehicles</h4>
+            	<h4>Veículos Ativos</h4>
             
             	<div ng-repeat="v in vehicles">
-            		<span>Vehicle [{{v.id}}]</span>
+            		<span>Vehicle [{{v.id}}]</span> <br/>
             		<md-button class="md-raised md-primary"
             			ng-click="createRouteTo(v)">Criar rota</md-button>
+            		<md-button class="md-raised md-primary"
+            			ng-click="showRouteTo(v)">Mostrar rota</md-button>
+            		<md-button class="md-raised md-primary"
+            			ng-click="showProximityTo(v)">Parada mais próxima</md-button>
+            		<md-button class="md-raised md-primary"
+            			ng-click="showEscapeTo(v)">Fuga de  rota</md-button>
             	</div>
             		
             </div>
+            
+            <map id="map" tile-layer="tileLayer.layer" zoom="6">
+                <marker ng-repeat="marker in markers" position="marker.position" info="marker.info" draggable="marker.draggable" ng-click='showPointInformation(position)'></marker>
+
+                <polyline path="path" color="'#FF0000'"></polyline>
+            </map>
             
         </div>
 

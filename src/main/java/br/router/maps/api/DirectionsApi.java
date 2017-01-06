@@ -77,7 +77,7 @@ public class DirectionsApi {
 						path.add(new Position(step.getStart_location().getLat(), step.getStart_location().getLng()));
 					}
 					path.add(new Position(
-							leg.getSteps().get(0).getEnd_location().getLat(), 
+							leg.getSteps().get(leg.getSteps().size() - 1).getEnd_location().getLat(), 
 							leg.getSteps().get(leg.getSteps().size() - 1).getEnd_location().getLng())
 					);
 				}
@@ -102,8 +102,8 @@ public class DirectionsApi {
 						position.setLatitude(dRoute.getLegs().get(i - 1).getEnd_location().getLat());
 						position.setLongitude(dRoute.getLegs().get(i - 1).getEnd_location().getLng());
 					} else {
-						position.setLatitude(dRoute.getLegs().get(i).getEnd_location().getLat());
-						position.setLongitude(dRoute.getLegs().get(i).getEnd_location().getLng());
+						position.setLatitude(dRoute.getLegs().get(i).getStart_location().getLat());
+						position.setLongitude(dRoute.getLegs().get(i).getStart_location().getLng());
 					}
 					stop.setName(name);
 				}
