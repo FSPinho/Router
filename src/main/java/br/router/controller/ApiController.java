@@ -47,7 +47,7 @@ public class ApiController {
 	@GetMapping(value = "")
 	public ApiResponse root() {
 		return new ApiResponse()
-				.withShortSuccessMessage("Router API");
+				.withShortSuccessMessage("Wellcame to the Router API!!!");
 	}
 	
 	/*
@@ -57,10 +57,17 @@ public class ApiController {
 	@GetMapping(value = "/vehicle")
 	public ApiResponse vehicleGetAll() {
 		return new ApiResponse()
-				.withShortSuccessMessage("Router API")
 				.withObject(vehicleService.getAll());
 	}
+	
+	@PostMapping(value = "/vehicle")
+	public ApiResponse vehicleCreate(@RequestBody Vehicle vehicle) {
 		
+		vehicle = vehicleService.save(vehicle);
+		return new ApiResponse()
+				.withShortSuccessMessage("Veículo criado!")
+				.withObject(vehicle);
+	}
 	
 	/*
 	 * Route API
@@ -69,7 +76,6 @@ public class ApiController {
 	@GetMapping(value = "/route")
 	public ApiResponse routeGetAll() {
 		return new ApiResponse()
-				.withShortSuccessMessage("Router API")
 				.withObject(routeService.getAll());
 	}
 	
@@ -82,6 +88,7 @@ public class ApiController {
 			return new ApiResponse()
 					.withFailStatus()
 					.withShortErrorMessage("Erro ao criar rota: um veículo deve ser informado!");
+			
 		} else if(route.isValid()) {
 			routeService.deleteByVehicle(vehicle);
 			route.setVehicle(vehicle);
@@ -92,6 +99,7 @@ public class ApiController {
 			return new ApiResponse()
 					.withObject(route)
 					.withShortSuccessMessage("Rota criada!");
+			
 		} else {
 			return new ApiResponse()
 					.withFailStatus()
@@ -99,7 +107,6 @@ public class ApiController {
 		}
 				
 	}
-	
 	
 	/*
 	 * Event API
@@ -110,6 +117,20 @@ public class ApiController {
 		return new ApiResponse()
 				.withShortSuccessMessage("Router API")
 				.withObject(proximityEventService.getAll());
+	}
+	
+	@GetMapping(value = "/proximity_event/by_vehicle/{vehicleId}")
+	public ApiResponse proximityEventGetByVehicle(@PathVariable Long vehicleId) {
+		
+		Vehicle vehicle = vehicleService.getById(vehicleId);
+		if(vehicle == null) {
+			return new ApiResponse()
+					.withFailStatus()
+					.withShortErrorMessage("Erro ao listar eventos: um veículo deve ser informado!");
+		} else {
+			return new ApiResponse()
+					.withObject(proximityEventService.getByVehicle(vehicle));
+		}
 	}
 	
 	@PostMapping(value = "/proximity_event/{vehicleId}")
@@ -154,6 +175,20 @@ public class ApiController {
 		return new ApiResponse()
 				.withShortSuccessMessage("Router API")
 				.withObject(escapeEventService.getAll());
+	}
+	
+	@GetMapping(value = "/escape_event/by_vehicle/{vehicleId}")
+	public ApiResponse escaoeEventGetByVehicle(@PathVariable Long vehicleId) {
+		
+		Vehicle vehicle = vehicleService.getById(vehicleId);
+		if(vehicle == null) {
+			return new ApiResponse()
+					.withFailStatus()
+					.withShortErrorMessage("Erro ao listar eventos: um veículo deve ser informado!");
+		} else {
+			return new ApiResponse()
+					.withObject(escapeEventService.getByVehicle(vehicle));
+		}
 	}
 	
 	@PostMapping(value = "/escape_event/{vehicleId}")

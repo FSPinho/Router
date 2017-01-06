@@ -10,7 +10,7 @@ import br.router.model.EscapeEvent;
 import br.router.model.Vehicle;
 
 public interface EscapeEventRepository extends JpaRepository<EscapeEvent, Long>{
-	List<EscapeEventRepository> findByVehicle(Vehicle vehicle);
+	List<EscapeEvent> findByVehicle(Vehicle vehicle);
 	
 	@Transactional
 	Long deleteByVehicle(Vehicle vehicle);

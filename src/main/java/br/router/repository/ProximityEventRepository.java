@@ -10,7 +10,7 @@ import br.router.model.ProximityEvent;
 import br.router.model.Vehicle;
 
 public interface ProximityEventRepository extends JpaRepository<ProximityEvent, Long>{
-	List<ProximityEventRepository> findByVehicle(Vehicle vehicle);
+	List<ProximityEvent> findByVehicle(Vehicle vehicle);
 	
 	@Transactional
 	Long deleteByVehicle(Vehicle vehicle);

@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.router.model.EscapeEvent;
+import br.router.model.Vehicle;
 import br.router.repository.EscapeEventRepository;
 import br.router.service.EscapeEventService;
 
@@ -18,6 +19,11 @@ public class ProximityEventServiceImpl implements EscapeEventService {
 	@Override
 	public List<EscapeEvent> getAll() {
 		return escapeEventRepository.findAll();
+	}
+	
+	@Override
+	public List<EscapeEvent> getByVehicle(Vehicle vehicle) {
+		return escapeEventRepository.findByVehicle(vehicle);
 	}
 
 	@Override
