@@ -1,103 +1,62 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorator="views/base/base"
-    th:with="currentPage='inicio'">
+<html lang="pt-br" ng-app="router">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width"/>
+        <title>Angular Map</title>
 
-	<head>
-	
-	    <title>Conbo</title>
-	    
-	    <link rel="stylesheet" type="text/css" th:href="@{/css/index/index.css}"/>
-	    <link rel="stylesheet" type="text/css" th:href="@{/material/plugins/grid/gridstack.min.css}"/>
-	    <!-- link rel="stylesheet" type="text/css" th:href="@{/material/plugins/grid/gridstack-extra.min.css}"/ -->
-	    
-	</head>
+        <link rel="stylesheet" type="text/css" href="bower_components/leaflet/dist/leaflet.css"/>
+        <link rel="stylesheet" type="text/css" href="bower_components/angular-material/angular-material.css"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:200,300,400,500,700,400italic"/>
+        
+        <style type="text/css">
+            #map {
+                height: 480px;
+                width: 480px;
+            }
+        </style>
 
-	<section layout:fragment="conteudo">
+    </head>
+    
+    <body layout="row" layout-padding ng-controller="mainController" md-colors="{background: 'deep-purple-700'}" >
 		
-		<div class="row">
-		
-			<!-- CONTAINER - Conteiner principal da aplicação -->
-			
-		    <div class="col l10 offset-l1 s12">
-		    	<!-- Conteúdo da página ... -->
-		    	
-		    	<div class="index__card-container grid-stack grid-stack-12">
-		    		
-		    		<div class="index__card-reference grid-stack-item"
-				        data-gs-auto-position="false"
-				        data-gs-no-drag="true"
-				        data-gs-no-resize="true"
-				        data-gs-width="4" data-gs-height="4">
-				        
-				        <div class="grid-stack-item-content">
-				    		<div class="card">
-				    		
-				    			<a class="card__menu btn-floating transparent z-depth-0 waves-effect waves-light dropdown-button"
-				    				data-activates="card-menu"
-				    				data-beloworigin="false"
-				    				data-alignment="right">
-				    				<i class="material-icons">more_vert</i>
-				    			</a>
-				    			<ul id="card-menu" class="dropdown-content card__menu-drop-down">
-									<li><a class="card__size-large">Grande</a></li>
-									<li><a class="card__size-medium">Pequeno</a></li>
-								</ul>
-				    			
-					    		<a class="index__card-image-link card-image lighten-1 waves-effect waves-block waves-light">
-					    			<span class="index__card-title card-title"></span>
-					    			<i class="index__card-icon material-icons card-image-icon"></i>
-					    		</a>
-					    		<div class="index__card-action card-action left-align">
-					    			<a class="index__card-action-link-reference btn-flat waves-effect"></a>
-					    		</div>
-					    	</div>
-				    		
-				    	</div>
-				    	
-				    </div>
-		    		
-		    		<!-- Dados para criação dos cards baseados no de referência -->
-		    		<div class="index__card"
-		    			data-title="Alunos" data-color="red" data-icon="school" data-size="medium">
-		    			<a th:href="@{/aluno/listar}">Listar</a>
-		    			<a th:href="@{/aluno/cadastrar}">Adicionar</a>
-		    		</div>
-		    		
-		    		<div class="index__card"
-		    			data-title="Pessoas" data-color="blue" data-icon="account-multiple" data-size="medium">
-		    			<a th:href="@{/pessoa/listar}">Listar</a>
-		    			<a th:href="@{/pessoa/cadastrar}">Adicionar</a>
-		    		</div>
-		    		
-		    		<div class="index__card"
-		    			data-title="Projetos" data-color="blue-grey" data-icon="view-dashboard" data-size="medium">
-		    			<a th:href="@{/projeto/listar}">Listar</a>
-		    			<a th:href="@{/projeto/cadastrar}">Adicionar</a>
-		    		</div>
-		    		
-		    	</div>
-		    	
-		    </div>
-		    	        	   
-		    <!-- CONTAINER -->
-		    
-		</div>
-		
-	</section>
+        <div md-whiteframe="2" md-colors="{background: 'deep-purple-500'}" flex-offset="10" flex="80" layout="row" layout-align="center center">
+            
+            <div flex layout-margin layout="column"
+            	md-colors="{background: 'grey-50'}"
+            	md-whiteframe="2" >
+            
+            	<h4>Active vehicles</h4>
+            
+            	<div ng-repeat="v in vehicles">
+            		<span>Vehicle [{{v.id}}]</span>
+            		<md-button class="md-raised md-primary"
+            			ng-click="createRouteTo(v)">Criar rota</md-button>
+            	</div>
+            		
+            </div>
+            
+        </div>
 
-	<section layout:fragment="js">
-	
-		<!-- SCRIPTS - Coloque aqui os scripts desta página -->
-		<script type="text/javascript" th:src="@{/material/plugins/jquery/jquery-ui.min.js}"></script>
-		<script type="text/javascript" th:src="@{/material/plugins/jquery/jquery.ui.touch-punch.min.js}"></script>
-		<script type="text/javascript" th:src="@{/material/plugins/grid/lodash.js}"></script>
-		<script type="text/javascript" th:src="@{/material/plugins/grid/gridstack.min.js}"></script>
-		<script type="text/javascript" th:src="@{/material/plugins/grid/gridstack.jQueryUI.min.js}"></script>
-		<script type="text/javascript" th:src="@{/js/index/index.js}"></script>
-			
-	</section>
+        <!-- Map plugins -->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBoBQcMnMYMQUPyorTXHqF1UjgpP4iflrg" async defer></script>
+        <script type="text/javascript" src="bower_components/leaflet/dist/leaflet.js"></script>
+        <script type="text/javascript" src="bower_components/leaflet-providers/leaflet-providers.js"></script>
+        <script src='https://unpkg.com/leaflet.gridlayer.googlemutant@latest/Leaflet.GoogleMutant.js'></script>
+        
+        <!-- Angular plugins -->
+        <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+        <script type="text/javascript" src="bower_components/angular-animate/angular-animate.js"></script>
+        <script type="text/javascript" src="bower_components/angular-aria/angular-aria.js"></script>
+        <script type="text/javascript" src="bower_components/angular-messages/angular-messages.js"></script>
+        <script type="text/javascript" src="bower_components/angular-material/angular-material.js"></script>
+        <script type="text/javascript" src="bower_components/angular-map/angularMap.js"></script>
+        
+        <script type="text/javascript" src="js/app.js"></script>
+        <script type="text/javascript" src="js/controller.js"></script>
+        <script type="text/javascript" src="js/api.service.js"></script>
+        <script type="text/javascript" src="js/api.value.js"></script>
 
+    </body>
 </html>

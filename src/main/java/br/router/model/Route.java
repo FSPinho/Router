@@ -1,51 +1,38 @@
 package br.router.model;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import org.springframework.data.annotation.Id;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-
-@Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Route {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private BigInteger id;
 	
-	@Column(unique = true)
 	private String name;
 	
 	private Long timestamp;
 	
-	@ManyToOne
 	@JsonIdentityReference(alwaysAsId = true)
 	private Vehicle vehicle;
 	
-	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE })
 	private List<Stop> stops;
 	
-	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE })
 	private List<Position> path;
 
-	public Long getId() {
+	public BigInteger getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(BigInteger id) {
 		this.id = id;
 	}
 

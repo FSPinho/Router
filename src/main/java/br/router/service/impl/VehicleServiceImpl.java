@@ -1,5 +1,6 @@
 package br.router.service.impl;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -16,7 +17,7 @@ public class VehicleServiceImpl implements VehicleService {
 	private VehicleRepository vehicleRepository;
 
 	@Override
-	public Vehicle getById(Long id) {
+	public Vehicle getById(BigInteger id) {
 		return vehicleRepository.findOne(id);
 	}
 	

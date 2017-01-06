@@ -1,5 +1,6 @@
 package br.router.controller;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -80,7 +81,7 @@ public class ApiController {
 	}
 	
 	@PostMapping(value = "/route/{vehicleId}")
-	public ApiResponse routeCreate(@PathVariable Long vehicleId, @RequestBody Route route) {
+	public ApiResponse routeCreate(@PathVariable BigInteger vehicleId, @RequestBody Route route) {
 		
 		Vehicle vehicle = vehicleService.getById(vehicleId);
 		
@@ -120,7 +121,7 @@ public class ApiController {
 	}
 	
 	@GetMapping(value = "/proximity_event/by_vehicle/{vehicleId}")
-	public ApiResponse proximityEventGetByVehicle(@PathVariable Long vehicleId) {
+	public ApiResponse proximityEventGetByVehicle(@PathVariable BigInteger vehicleId) {
 		
 		Vehicle vehicle = vehicleService.getById(vehicleId);
 		if(vehicle == null) {
@@ -134,7 +135,7 @@ public class ApiController {
 	}
 	
 	@PostMapping(value = "/proximity_event/{vehicleId}")
-	public ApiResponse proximityEventCreate(@PathVariable Long vehicleId, @RequestBody Position position) {
+	public ApiResponse proximityEventCreate(@PathVariable BigInteger vehicleId, @RequestBody Position position) {
 		
 		Vehicle vehicle = vehicleService.getById(vehicleId);
 		
@@ -178,7 +179,7 @@ public class ApiController {
 	}
 	
 	@GetMapping(value = "/escape_event/by_vehicle/{vehicleId}")
-	public ApiResponse escaoeEventGetByVehicle(@PathVariable Long vehicleId) {
+	public ApiResponse escaoeEventGetByVehicle(@PathVariable BigInteger vehicleId) {
 		
 		Vehicle vehicle = vehicleService.getById(vehicleId);
 		if(vehicle == null) {
@@ -192,7 +193,7 @@ public class ApiController {
 	}
 	
 	@PostMapping(value = "/escape_event/{vehicleId}")
-	public ApiResponse escapeEventCreate(@PathVariable Long vehicleId, @RequestBody Position position) {
+	public ApiResponse escapeEventCreate(@PathVariable BigInteger vehicleId, @RequestBody Position position) {
 		
 		Vehicle vehicle = vehicleService.getById(vehicleId);
 		

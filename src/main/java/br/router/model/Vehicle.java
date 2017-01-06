@@ -1,26 +1,27 @@
 package br.router.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import java.math.BigInteger;
+
+import org.springframework.data.annotation.Id;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-@Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Vehicle {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private BigInteger id;
 
-	public Long getId() {
+	public Vehicle() {
+		
+	}
+
+	public BigInteger getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(BigInteger id) {
 		this.id = id;
 	}
 	

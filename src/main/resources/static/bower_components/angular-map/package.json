@@ -1,0 +1,27 @@
+{
+  "name": "angular-map",
+  "version": "1.0.0",
+  "description": "",
+  "main": "angularMap.conf.js",
+  "dependencies": {
+    "grunt": "^1.0.1"
+  },
+  "devDependencies": {
+    "grunt-contrib-uglify": "^2.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-karma": "^2.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FelipePinhoUFC/angular-map.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FelipePinhoUFC/angular-map/issues"
+  },
+  "homepage": "https://github.com/FelipePinhoUFC/angular-map#readme"
+}

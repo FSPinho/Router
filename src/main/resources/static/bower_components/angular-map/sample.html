@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-br" ng-app="sample">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <title>Angular Map</title>
+
+        <link rel="stylesheet" type="text/css" href="bower_components/leaflet/dist/leaflet.css">
+        <link rel="stylesheet" type="text/css" href="bower_components/angular-material/angular-material.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:200,300,400,500,700,400italic">
+        
+        <style type="text/css">
+            #map {
+                height: 480px;
+                width: 480px;
+            }
+        </style>
+
+    </head>
+    <body layout="row" layout-padding ng-controller="sampleController" md-colors="{background: 'deep-purple-700'}" >
+
+        <div md-whiteframe="2" md-colors="{background: 'deep-purple-500'}" flex-offset="10" flex="80" layout="row" layout-align="center center">
+            
+            <div flex layout-margin md-whiteframe="2" md-colors="{background: 'grey-50'}">
+                <div>
+                    <md-input-container>
+                        <label>{{tileLayer.name}}</label>
+                        <md-select ng-model="tileLayer">
+                            <md-option ng-repeat="layer in layers" ng-value="layer">
+                                {{layer.name}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+
+                <div ng-repeat="marker in markers">
+                    <md-input-container>
+                        <label>Latitude</label>
+                        <input ng-model="marker.position[0]">
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Longitude</label>
+                        <input ng-model="marker.position[1]">
+                    </md-input-container>
+                </div>
+            </div>
+
+            <map id="map" tile-layer="tileLayer.layer" zoom="6">
+                <marker ng-repeat="marker in markers" position="marker.position" info="marker.info" draggable="marker.draggable" ng-click='showPointInformation(position)'></marker>
+
+                <polyline path="path" color="'#FF0000'"></polyline>
+            </map>
+
+        </div>
+
+        <!-- Map plugins -->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBoBQcMnMYMQUPyorTXHqF1UjgpP4iflrg" async defer></script>
+        <script type="text/javascript" src="bower_components/leaflet/dist/leaflet.js"></script>
+        <script type="text/javascript" src="bower_components/leaflet-providers/leaflet-providers.js"></script>
+        <script src='https://unpkg.com/leaflet.gridlayer.googlemutant@latest/Leaflet.GoogleMutant.js'></script>
+        
+        <!-- Angular plugins -->
+        <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+        <script type="text/javascript" src="bower_components/angular-animate/angular-animate.js"></script>
+        <script type="text/javascript" src="bower_components/angular-aria/angular-aria.js"></script>
+        <script type="text/javascript" src="bower_components/angular-messages/angular-messages.js"></script>
+        <script type="text/javascript" src="bower_components/angular-material/angular-material.js"></script>
+        <script type="text/javascript" src="angularMap.js"></script>
+        
+        <script type="text/javascript">
+
+            var app = angular.module('sample', ['angularMap', 'ngMaterial']);
+
+            app.controller("sampleController", function($scope, mapApiService, layerProviders) {
+
+                $scope.layers = [ 
+                    { name: "Google Maps", layer: mapApiService.getLayer(layerProviders.GOOGLE) }, 
+                    { name: "OpenStreetMap", layer: mapApiService.getLayer(layerProviders.OPEN_STREET_MAP) }, 
+                    { name: "openStreetMap.BlackAndWhite", layer: mapApiService.getLayer(layerProviders.OPEN_STREET_MAP_BACK_AND_WHITE) }
+                ];
+
+                $scope.tileLayer = $scope.layers[0];
+
+                $scope.markers = [
+                    { position: [-5.3062885 - 3, -39.3806493 + 2], info: "Marker info 1", draggable: true }, 
+                    { position: [-5.3062885 + 3, -39.3806493 + 3], info: "Marker info 2", draggable: true }, 
+                    { position: [-5.3062885 - 2, -39.3806493 - 2], info: "Marker info 3", draggable: true }, 
+                    { position: [-5.3062885 + 2, -39.3806493 - 3], info: "Marker info 4", draggable: true }
+                ];
+
+                $scope.path = $scope.markers.map(function(m) {
+                    return m.position;
+                });
+
+            });
+
+        </script>
+
+    </body>
+</html>

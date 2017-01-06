@@ -1,5 +1,6 @@
 package br.router.service.impl;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -17,7 +18,7 @@ public class RouteServiceImpl implements RouteService {
 	private RouteRepository routeRepository;
 
 	@Override
-	public Route getById(Long id) {
+	public Route getById(BigInteger id) {
 		return routeRepository.findOne(id);
 	}
 

@@ -1,31 +1,23 @@
 package br.router.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import java.math.BigInteger;
 
-@Entity
+import org.springframework.data.annotation.Id;
+
 public class Stop {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private BigInteger id;
 	
-	@Column(unique = true)
 	private String name;
 	
-	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE })
 	private Position position;
 
-	public Long getId() {
+	public BigInteger getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(BigInteger id) {
 		this.id = id;
 	}
 

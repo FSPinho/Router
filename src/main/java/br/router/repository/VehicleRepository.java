@@ -1,9 +1,11 @@
 package br.router.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.math.BigInteger;
+
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 import br.router.model.Vehicle;
 
-public interface VehicleRepository extends JpaRepository<Vehicle, Long>{
+public interface VehicleRepository extends MongoRepository<Vehicle, BigInteger>{
 
 }

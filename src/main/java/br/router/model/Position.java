@@ -1,22 +1,18 @@
 package br.router.model;
 
+import java.math.BigInteger;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.springframework.data.annotation.Id;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.router.util.math.GeoMath;
 
-@Entity
 public class Position {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private BigInteger id;
 
 	private Double latitude = null;
 	private Double longitude = null;
@@ -30,11 +26,11 @@ public class Position {
 		this.longitude = longitude;
 	}
 
-	public Long getId() {
+	public BigInteger getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(BigInteger id) {
 		this.id = id;
 	}
 
